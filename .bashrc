@@ -124,5 +124,22 @@ if [ -z "$SSH_AGENT_PID"]; then
 	eval $(ssh-agent) > /dev/null
 fi
 
+# list file size of directory
+
+dirsize() {
+	for i in $(ls);
+	do
+		du -sh ./$i
+    done
+}
+
+# My classic opener, props to liveoverflow
 /home/dan/neo
+
+# To save my dotfiles
 alias dotfiles='/usr/bin/git --git-dir=/home/dan/.dotfiles/ --work-tree=/home/dan'
+
+# Some other aliases I can define here that aren't as sensitive as my bash_aliases file
+#alias vi="nvim"
+#alias vim="nvim"
+
