@@ -56,21 +56,55 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+#if [ "$color_prompt" = yes ]; then
+#    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+#else
+#    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+#fi
+#unset color_prompt force_color_prompt
+#
+## If this is an xterm set the title to user@host:dir
+#case "$TERM" in
+#xterm*|rxvt*)
+#    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+#    ;;
+#*)
+#    ;;
+#esac
+
+# This is just a better prompt
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\[\e[01;33m\]\\$\[\e[0m\]"
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1='┌──[\u@\h]─[\w]\n└──╼ \$ '
 fi
+
+# Set 'man' colors
+if [ "$color_prompt" = yes ]; then
+        man() {
+        env \
+        LESS_TERMCAP_mb=$'\e[01;31m' \
+        LESS_TERMCAP_md=$'\e[01;31m' \
+        LESS_TERMCAP_me=$'\e[0m' \
+        LESS_TERMCAP_se=$'\e[0m' \
+        LESS_TERMCAP_so=$'\e[01;44;33m' \
+        LESS_TERMCAP_ue=$'\e[0m' \
+        LESS_TERMCAP_us=$'\e[01;32m' \
+        man "$@"
+        }
+fi
+
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\[\e[01;33m\]\\$\[\e[0m\] "
     ;;
 *)
     ;;
 esac
+
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -91,6 +125,12 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+
+# These aliases are just better in every way
+alias dd='dd status=progress'
+alias _='sudo'
+alias _i='sudo -i'
+alias gah='sudo !!'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert

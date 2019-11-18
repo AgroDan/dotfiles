@@ -16,7 +16,8 @@ set autoindent
 set smartindent
 
 " Do some neat stuff
-set number  " Line numbers
+"set number  " Line numbers
+set number relativenumber " This is better than line numbers
 set wrap    " wrap lines
 set showmatch   " highlight matching parens
 set ruler        " show line and col number of the cursor
