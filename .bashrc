@@ -179,7 +179,13 @@ dirsize() {
 # To save my dotfiles
 alias dotfiles='/usr/bin/git --git-dir=/home/dan/.dotfiles/ --work-tree=/home/dan'
 
+# Don't use nano like a n00b
+export EDITOR="/usr/bin/vim"
+
 # Some other aliases I can define here that aren't as sensitive as my bash_aliases file
 #alias vi="nvim"
 #alias vim="nvim"
 
+
+# Go path
+export PATH=$PATH:/usr/local/go/bin
